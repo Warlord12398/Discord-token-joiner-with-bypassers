@@ -1,0 +1,4 @@
+requests
+discord.py
+logging
+asyncio
