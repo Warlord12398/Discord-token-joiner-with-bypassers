@@ -1,4 +1,3 @@
-requests
-discord.py
-logging
+aiohttp
 asyncio
+threading
