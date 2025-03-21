@@ -1,8 +1,5 @@
-echo off
-echo Installing dependencies...
-pip install -r requirements.txt
-
-echo Running token_joiner.py...
+@echo off
+title Discord Token Joiner
+echo Starting Token Joiner...
 python token_joiner.py
-
 pause
