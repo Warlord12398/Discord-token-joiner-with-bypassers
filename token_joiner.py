@@ -6,7 +6,7 @@ import threading
 DISCORD_API = "https://discord.com/api/v9"
 
 def get_token():
-    """Reads the token from usertoken.txt."""
+    
     try:
         with open("usertoken.txt", "r") as file:
             return file.read().strip()
@@ -20,7 +20,7 @@ async def send_request(session, url, method="POST", headers=None, json_data=None
         return response.status, await response.text()
 
 async def join_server(token, invite_code):
-    """Joins a Discord server and bypasses onboarding if needed."""
+    
     invite = invite_code.replace("https://discord.gg/", "").replace("discord.gg/", "")
     join_url = f"{DISCORD_API}/invites/{invite}"
 
@@ -41,7 +41,7 @@ async def join_server(token, invite_code):
             print(f"[ERROR] Failed to join {invite_code} - {status}: {response}")
 
 async def bypass_onboarding(session, token, guild_id):
-    """Bypasses the onboarding screen if required."""
+    
     url = f"{DISCORD_API}/guilds/{guild_id}/onboarding"
     headers = {"Authorization": token, "Content-Type": "application/json"}
 
@@ -54,7 +54,7 @@ async def bypass_onboarding(session, token, guild_id):
         print(f"[ERROR] Onboarding bypass failed for {guild_id} - {status}: {response}")
 
 async def accept_rules(session, token, guild_id):
-    """Accepts server rules if required."""
+    
     url = f"{DISCORD_API}/guilds/{guild_id}/member-verification"
     headers = {"Authorization": token, "Content-Type": "application/json"}
 
@@ -73,7 +73,7 @@ async def accept_rules(session, token, guild_id):
             print(f"[ERROR] Failed to accept rules for {guild_id} - {status}: {response}")
 
 async def click_buttons(session, token, guild_id):
-    """Finds and clicks security bot verification buttons and role buttons."""
+    
     channels_url = f"{DISCORD_API}/guilds/{guild_id}/channels"
     headers = {"Authorization": token, "Content-Type": "application/json"}
 
@@ -82,13 +82,13 @@ async def click_buttons(session, token, guild_id):
     if status == 200:
         channels = json.loads(response)
         for channel in channels:
-            if channel.get("type") == 0:  # Only check text channels
+            if channel.get("type") == 0:  
                 await scan_buttons(session, token, channel["id"])
     else:
         print(f"[ERROR] Failed to fetch channels for {guild_id} - {status}: {response}")
 
 async def scan_buttons(session, token, channel_id):
-    """Scans for messages with buttons (verification & role buttons) and clicks them."""
+    
     messages_url = f"{DISCORD_API}/channels/{channel_id}/messages?limit=10"
     headers = {"Authorization": token, "Content-Type": "application/json"}
 
